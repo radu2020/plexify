@@ -2,21 +2,20 @@ package worker
 
 import (
 	"context"
-	"sync"
-	"time"
+	"encoding/json"
+	"fmt"
 	"log"
 	"math/rand"
 	"net/http"
-	"fmt"
-	"encoding/json"
+	"sync"
 	"sync/atomic"
+	"time"
 )
 
 var (
 	JobIDCounter int32
 	JobQueue     chan Job
 	JobStatuses  sync.Map
-	
 )
 
 type Job struct {
@@ -35,9 +34,9 @@ type JobProcessor interface {
 }
 
 // Concrete implementation for processing string-based jobs
-type StringJobProcessor struct{
+type StringJobProcessor struct {
 	JobStatuses  sync.Map
-	JobQueue chan Job
+	JobQueue     chan Job
 	JobIDCounter int32
 }
 

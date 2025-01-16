@@ -51,13 +51,13 @@ func simulateClient(clientID, requests, periodicChecks int, wg *sync.WaitGroup) 
 		jobIDs = append(jobIDs, jobID)
 		time.Sleep(time.Millisecond * 500) // Simulate delay between job submissions
 	}
-	
+
 	// Send multiple GET /status/{job_id} requests
 	// Each periodic check, checks the status for all existing jobs.
 	start := time.Now()
 	for i := 0; i < periodicChecks; i++ {
 		log.Printf("Client %d: Querying job status start...\n", clientID)
-		
+
 		for _, jobID := range jobIDs {
 			queryJobStatus(clientID, jobID)
 			time.Sleep(time.Millisecond * 5000) // Simulate delay between status checks
@@ -70,7 +70,7 @@ func simulateClient(clientID, requests, periodicChecks int, wg *sync.WaitGroup) 
 	}
 
 }
-	
+
 // Send a POST /job request
 func sendJobRequest(payload map[string]string) int {
 	body, _ := json.Marshal(payload)

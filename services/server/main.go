@@ -1,19 +1,19 @@
 package main
 
 import (
+	"context"
+	"github.com/radu2020/plexify/services/server/pkg/worker"
 	"log"
 	"net/http"
+	"os"
 	"os/signal"
 	"sync"
-	"context"
 	"syscall"
-	"os"
-	"github.com/radu2020/plexify/services/server/pkg/worker"
 )
 
-const workerCount  = 5
+const workerCount = 5
 
-func startServer (srv *http.Server) {
+func startServer(srv *http.Server) {
 	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatalf("ListenAndServe: %v", err)
 	}
@@ -22,8 +22,8 @@ func startServer (srv *http.Server) {
 func main() {
 	// Create Job Processor
 	sjp := worker.StringJobProcessor{
-		JobStatuses: sync.Map{},
-		JobQueue: make(chan worker.Job, 100),
+		JobStatuses:  sync.Map{},
+		JobQueue:     make(chan worker.Job, 100),
 		JobIDCounter: 0,
 	}
 
@@ -33,7 +33,7 @@ func main() {
 
 	// Create a context that can be canceled
 	ctx, cancelCtx := context.WithCancel(context.Background())
- 	defer cancelCtx() // Ensure cancel is called at the end to clean up
+	defer cancelCtx() // Ensure cancel is called at the end to clean up
 
 	// Wait group to ensure all goroutines finish before exiting
 	wg := sync.WaitGroup{}
