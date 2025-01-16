@@ -17,8 +17,8 @@ make build
 Run in separate windows side-by-side
 
 ```
-make run-server
-make run-client
+make server
+make client
 ```
 
 ## Clean
