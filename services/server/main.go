@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"os/signal"
 	"sync"
-	
 	"context"
 	"syscall"
 	"os"
@@ -14,6 +13,11 @@ import (
 
 const workerCount  = 5
 
+func startServer (srv *http.Server) {
+	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		log.Fatalf("ListenAndServe: %v", err)
+	}
+}
 
 func main() {
 	// Create Job Processor
@@ -64,16 +68,3 @@ func main() {
 	// Final cleanup before exiting
 	log.Println("Server stopped gracefully.")
 }
-
-func startServer (srv *http.Server) {
-	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		log.Fatalf("ListenAndServe: %v", err)
-	}
-}
-
-
-
-
-
-
-

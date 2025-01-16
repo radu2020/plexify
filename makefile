@@ -1,5 +1,5 @@
-CLIENT_BINARY_NAME=build/client
-SERVER_BINARY_NAME=build/server
+CLIENT_BINARY_NAME=build/client.out
+SERVER_BINARY_NAME=build/server.out
 
 .PHONY: build
 build:
