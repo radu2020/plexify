@@ -15,8 +15,8 @@ clean:
 
 .PHONY: server
 server:
-	@./build/server
+	@./${SERVER_BINARY_NAME}
 
 .PHONY: client
 client:
-	@./build/client
+	@./${CLIENT_BINARY_NAME}
